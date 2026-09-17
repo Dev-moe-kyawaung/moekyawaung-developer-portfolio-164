@@ -1,0 +1,416 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", "Chakra Petch", sans-serif;
+  --font-tech: "Chakra Petch", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ==========================================================================
+   NEURAL COMMAND OS — 3 fused modes: NEURAL / ORBITAL / OS
+   ========================================================================== */
+:root,
+html.mode-neural {
+  --bg-void: #03060e;
+  --bg-deep: #060b18;
+  --bg-panel: rgba(10, 18, 34, 0.72);
+  --bg-panel-solid: #0a1222;
+  --bg-elevated: rgba(16, 26, 46, 0.85);
+
+  --grid-line: rgba(60, 220, 200, 0.05);
+  --border-soft: rgba(120, 230, 220, 0.16);
+  --border-mid: rgba(120, 230, 220, 0.34);
+  --border-strong: rgba(120, 230, 220, 0.7);
+
+  --c-primary: #34f5d0;      /* bioluminescent teal */
+  --c-secondary: #7c5cff;    /* synapse violet */
+  --c-tertiary: #ff5ea8;     /* neuron pink */
+  --c-signal: #a6ff5e;       /* dendrite green */
+  --c-text: #e8f6f4;
+  --c-text-dim: #9fb6c4;
+  --c-text-mute: #5f7788;
+
+  --glow-primary: 0 0 24px rgba(52, 245, 208, 0.5), 0 0 60px rgba(52, 245, 208, 0.18);
+  --glow-secondary: 0 0 24px rgba(124, 92, 255, 0.5);
+  --glow-soft: 0 0 20px rgba(52, 245, 208, 0.25);
+
+  --mode-label: "NEURAL BIO-LINK";
+}
+
+html.mode-orbital {
+  --bg-void: #02050c;
+  --bg-deep: #050a16;
+  --bg-panel: rgba(8, 16, 32, 0.74);
+  --bg-panel-solid: #08101f;
+  --bg-elevated: rgba(12, 22, 42, 0.85);
+
+  --grid-line: rgba(90, 180, 255, 0.055);
+  --border-soft: rgba(120, 190, 255, 0.16);
+  --border-mid: rgba(120, 190, 255, 0.36);
+  --border-strong: rgba(120, 190, 255, 0.72);
+
+  --c-primary: #4db8ff;      /* radar blue */
+  --c-secondary: #ffb020;    /* mission amber */
+  --c-tertiary: #ff5e6c;     /* alert red */
+  --c-signal: #5effc8;       /* telemetry green */
+  --c-text: #e6f1ff;
+  --c-text-dim: #9db4d0;
+  --c-text-mute: #5a728c;
+
+  --glow-primary: 0 0 24px rgba(77, 184, 255, 0.5), 0 0 60px rgba(77, 184, 255, 0.18);
+  --glow-secondary: 0 0 24px rgba(255, 176, 32, 0.5);
+  --glow-soft: 0 0 20px rgba(77, 184, 255, 0.25);
+
+  --mode-label: "ORBITAL COMMAND";
+}
+
+html.mode-os {
+  --bg-void: #070510;
+  --bg-deep: #0c0a1a;
+  --bg-panel: rgba(20, 16, 40, 0.7);
+  --bg-panel-solid: #100c22;
+  --bg-elevated: rgba(28, 22, 54, 0.86);
+
+  --grid-line: rgba(180, 140, 255, 0.055);
+  --border-soft: rgba(190, 150, 255, 0.18);
+  --border-mid: rgba(190, 150, 255, 0.38);
+  --border-strong: rgba(190, 150, 255, 0.75);
+
+  --c-primary: #b98cff;      /* holographic violet */
+  --c-secondary: #35e0ff;    /* window cyan */
+  --c-tertiary: #ff7edb;     /* accent magenta */
+  --c-signal: #8affc0;       /* status green */
+  --c-text: #f2ecff;
+  --c-text-dim: #b7a8d6;
+  --c-text-mute: #6d5f8c;
+
+  --glow-primary: 0 0 24px rgba(185, 140, 255, 0.5), 0 0 60px rgba(185, 140, 255, 0.2);
+  --glow-secondary: 0 0 24px rgba(53, 224, 255, 0.5);
+  --glow-soft: 0 0 20px rgba(185, 140, 255, 0.28);
+
+  --mode-label: "DEVELOPER OS";
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  background: var(--bg-void);
+}
+
+body {
+  margin: 0;
+  background: var(--bg-void);
+  color: var(--c-text-dim);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background-color 0.6s ease;
+}
+
+::selection { background: color-mix(in srgb, var(--c-primary) 35%, transparent); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--c-primary) 30%, transparent);
+  border-radius: 6px;
+  border: 2px solid var(--bg-void);
+}
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--c-primary) 55%, transparent); }
+
+:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+.font-display { font-family: var(--font-display); }
+.font-tech { font-family: var(--font-tech); }
+.font-mono { font-family: var(--font-mono); }
+
+.headline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--c-text);
+}
+
+.title-glow {
+  color: var(--c-primary);
+  text-shadow: var(--glow-primary);
+}
+
+.gradient-text {
+  background: linear-gradient(110deg, var(--c-primary), var(--c-secondary) 55%, var(--c-tertiary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+
+/* ==========================================================================
+   GLASS PANELS & HOLOGRAPHIC SURFACES
+   ========================================================================== */
+.glass {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+}
+
+.glass-strong {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-mid);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+}
+
+/* Holographic corner-bracket frame (OS window chrome) */
+.holo-frame {
+  position: relative;
+}
+.holo-frame::before,
+.holo-frame::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--c-primary);
+  border-style: solid;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.holo-frame::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.holo-frame::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.scanline-panel {
+  position: relative;
+  overflow: hidden;
+}
+.scanline-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   RADAR SWEEP (Orbital)
+   ========================================================================== */
+.radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--c-primary) 22%, transparent) 55deg,
+    transparent 70deg
+  );
+  animation: radar-rotate 4.2s linear infinite;
+}
+@keyframes radar-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.radar-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+}
+
+@keyframes radar-ping {
+  0% { transform: scale(0.2); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.radar-ping {
+  animation: radar-ping 3s ease-out infinite;
+}
+
+/* ==========================================================================
+   ORBITAL PATHS
+   ========================================================================== */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+.orbit-path {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed var(--border-soft);
+}
+.orbit-satellite {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  box-shadow: var(--glow-primary);
+}
+
+/* ==========================================================================
+   NEURAL PULSE / SYNAPSE
+   ========================================================================== */
+@keyframes synapse-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+.synapse-node {
+  animation: synapse-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes bio-breathe {
+  0%, 100% { filter: brightness(1); transform: scale(1); }
+  50% { filter: brightness(1.3); transform: scale(1.04); }
+}
+.bio-breathe {
+  animation: bio-breathe 5s ease-in-out infinite;
+}
+
+/* organic floating */
+@keyframes float-organic {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-8px) translateX(4px); }
+  66% { transform: translateY(4px) translateX(-4px); }
+}
+.float-organic { animation: float-organic 8s ease-in-out infinite; }
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 10px;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--bg-void);
+  background: linear-gradient(120deg, var(--c-primary), var(--c-secondary));
+  border: 1px solid transparent;
+  box-shadow: var(--glow-soft);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.2s ease;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--glow-primary); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--c-primary);
+  background: color-mix(in srgb, var(--c-primary) 8%, transparent);
+  border: 1px solid var(--border-mid);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--c-primary) 16%, transparent);
+  border-color: var(--c-primary);
+  box-shadow: var(--glow-soft);
+}
+
+/* ==========================================================================
+   OS WINDOW REVEAL (depth zoom-in)
+   ========================================================================== */
+@keyframes window-zoom-in {
+  0% { opacity: 0; transform: perspective(1200px) translateZ(-140px) rotateX(6deg) scale(0.95); }
+  100% { opacity: 1; transform: perspective(1200px) translateZ(0) rotateX(0) scale(1); }
+}
+.window-reveal {
+  opacity: 0;
+}
+.window-reveal.in {
+  animation: window-zoom-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* fluid rise for generic reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+
+/* data flow line animation */
+@keyframes data-flow {
+  to { stroke-dashoffset: -32; }
+}
+.data-flow { stroke-dasharray: 6 8; animation: data-flow 1.4s linear infinite; }
+
+/* live blink */
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.live-blink { animation: live-blink 1.6s ease-in-out infinite; }
+
+/* telemetry bar sweep */
+@keyframes bar-load {
+  from { width: 0; }
+}
+.bar-load { animation: bar-load 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .window-reveal { opacity: 1 !important; transform: none !important; }
+}
